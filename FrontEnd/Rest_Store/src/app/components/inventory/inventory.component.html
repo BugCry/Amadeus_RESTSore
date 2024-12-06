@@ -1,0 +1,135 @@
+
+<div class="content-header fixed-right">
+  <div class="container-fluid">
+    <div class="row mb-2">
+        
+      <div class="col-md-12 col-12">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/Inventory">Inventory</a></li>
+          <li class="breadcrumb-item active">List</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-4">
+
+  <!-- Form Create/Edit -->
+   <!-- Formulario recaudos -->
+   <form (submit)="inventoryFormAction()" [formGroup]="inventoryForm">
+    <div class = "row justify-content-center pt-2">
+
+      <!-- product -->
+      <div class = "col-md-4">
+        <div class = "col-md-12">
+            
+          <div appearance="fill" class = "col-md-12 col-12">
+            <label for="user" class="form-label">Product*</label>
+            <select class="form-select" formControlName="product" name="product" id ="product" >
+              <option value="">Select</option>
+              <option *ngFor="let prod of prodList" [value]="prod.id">
+                {{prod.name}}
+              </option>
+            </select>
+            <div class="text-danger" *ngIf="inventoryForm.controls['product'].invalid && (inventoryForm.controls['product'].touched || inventoryForm.controls['product'].dirty)">
+              <span *ngIf="inventoryForm.controls['product'].errors?.['product']">This is required</span>
+            </div>
+          </div>
+            
+        </div>
+      </div>
+
+      <!-- user -->
+      <div class = "col-md-4" >
+        <div class = "col-md-12">
+
+          <div appearance="fill" class = "col-md-12 col-12">
+            <label for="user" class="form-label">User*</label>
+            <select class="form-select" formControlName="user" name="user" id ="user" >
+              <option value="">Select</option>
+              <option *ngFor="let user of usersList" [value]="user.id">
+                {{user.name}}
+              </option>
+            </select>
+            <div class="text-danger" *ngIf="inventoryForm.controls['user'].invalid && (inventoryForm.controls['user'].touched || inventoryForm.controls['user'].dirty)">
+              <span *ngIf="inventoryForm.controls['user'].errors?.['user']">This is required</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- quantity -->
+      <div class = "col-md-4" >
+        <div class = "col-md-12">
+
+          <div class="col-md-12 col-12" appearance="fill">
+            <label for="quantity" class="form-label">Quantity*</label>
+            <input class="form-control" user="number" formControlName="quantity" matInput product="quantity" id="quantity">
+            <div class="text-danger" *ngIf="inventoryForm.controls['quantity'].invalid && (inventoryForm.controls['quantity'].touched || inventoryForm.controls['quantity'].dirty)">
+              <span *ngIf="inventoryForm.controls['quantity'].errors?.['required']">This is required</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <div class = "col-md-2 mt-4">
+        <input class="btn btn-success" type="submit" [disabled]="!inventoryForm.valid" value="{{showCancel ? 'Modify Inventory' : 'Add Inventory'}}">
+      </div>
+
+      <div class = "col-md-2 mt-4" *ngIf="showCancel">
+        <button user="button" class="btn btn-danger" (click)="cancelEdit()">Cancel
+          <span class="fas fa-ban btn-success"></span>
+        </button>
+      </div> 
+
+    </div>
+  </form>
+  
+  <!-- List Table -->
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table" >
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product</th>
+        <th scope="col">Condition</th>
+        <th scope="col">Type</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">User</th>
+        <th scope="col">Modification Date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(item of inventorysList;track item){
+      <tr>
+        <th scope="row">{{item.id}}</th>
+        <th>{{item.productName}}</th>
+        <th>{{item.productCondition}}</th>
+        <th>{{item.productTypeName}}</th>
+        <th>{{item.productPrice}}</th>
+        <th>{{item.quantity}}</th>
+        <th>{{item.userName}}</th>
+        <th>{{item.modificationDate}}</th>
+        <th class="text-center">
+          <button user="button" class="btn {{item.status == true  ? 'btn-success' : 'btn-danger'}} mx-2" (click)="deleteInventory(item)">
+            <span class="{{item.status == true  ? 'fas fa-check' : 'fas fa-times'}}"></span>
+          </button>
+        </th>
+        <th class="text-center">
+          <button user="button" class="btn btn-primary mx-2" (click)="editInventory(item)">Edit</button>
+          <!-- <button user="button" class="btn btn-danger mx-2">Delete</button> -->
+        </th>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <router-outlet />
+</div>
+

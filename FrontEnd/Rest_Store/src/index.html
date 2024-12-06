@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>RestStore</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <style>
+    .fixed-right {
+        position: sticky;
+        right: 0;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+<body data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">RestStore</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/home">
+              Home <span class="fas fa-home"></span>
+            </a>
+          </li>
+          <!-- Products -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Products <span class="fas fa-list-check"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/products">List</a></li>
+              <li><a class="dropdown-item" href="/products/types">Types</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/inventory">
+              Inventory <span class="fas fa-boxes-stacked"></span>
+            </a>
+          </li>
+          <!-- Orders -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Orders <span class="fas fa-boxes-table"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/orders">List</a></li>
+              <li><a class="dropdown-item" href="/orders/shipping">Shipping</a></li>
+              <li><a class="dropdown-item" href="/orders/sales">Sales</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"></li>
+            <a class="nav-link" href="/inventory">
+              Invoice <span class="fas fa-paper"></span>
+            </a>
+          </li>
+          <!-- Mistery Bags -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Mistery Bags <span class="fas fa-gift"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/products">List</a></li>
+              <li><a class="dropdown-item" href="/products/detailed">Detailed</a></li>
+            </ul>
+          </li>
+          <!-- Users -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Users <span class="fas fa-users"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/users">List</a></li>
+              <li><a class="dropdown-item" href="/users/types">Types</a></li>
+            </ul>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked onclick="changeTheme()">
+            <label class="form-check-label" for="flexSwitchCheckChecked">Change Theme</label>
+          </div>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <app-root></app-root>
+
+  <script>
+    function changeTheme(){
+      var element = document.body;
+      element.dataset.bsTheme = element.dataset.bsTheme == "light" ? "dark" : "light";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "OboGfP0CPbAWPFqs3abM2rPGk2xnqnLzuoa7wRDvWrE=",
+  "Source": "NETCore_REST_API",
+  "BasePath": "_content/NETCore_REST_API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

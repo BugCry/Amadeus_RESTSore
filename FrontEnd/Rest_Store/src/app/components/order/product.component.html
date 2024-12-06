@@ -1,0 +1,181 @@
+
+<div class="content-header fixed-right">
+  <div class="container-fluid">
+    <div class="row mb-2">
+        
+      <div class="col-md-12 col-12">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/Products">Products</a></li>
+          <li class="breadcrumb-item active">List</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-4">
+
+  <!-- Form Create/Edit -->
+   <!-- Formulario recaudos -->
+   <form (submit)="productFormAction()" [formGroup]="productForm">
+    <div class = "row justify-content-center pt-2">
+
+      <!-- name -->
+      <div class = "col-md-4">
+        <div class = "col-md-12">
+            
+          <div class="col-md-12 col-12" appearance="fill">
+            <label for="name" class="form-label">Name*</label>
+            <input type="text" class="form-control" formControlName="name" matInput name="name" id="name" placeholder="Sony Headphones">
+            <div class="text-danger" *ngIf="productForm.controls['name'].invalid && (productForm.controls['name'].touched || productForm.controls['name'].dirty)">
+              <span *ngIf="productForm.controls['name'].errors?.['required']">This is required</span>
+            </div>
+          </div>
+            
+        </div>
+      </div>
+
+      <!-- type -->
+      <div class = "col-md-4" >
+        <div class = "col-md-12">
+
+          <div appearance="fill" class = "col-md-12 col-12">
+            <label for="type" class="form-label">Type*</label>
+            <select class="form-select" formControlName="type" name="type" id ="type" >
+              <!-- [(ngModel)]="valorResolucion"
+              <option>
+                    <ngx-select-search
+                    [formControl]="resolucionFilter"
+                    placeholderLabel="Escriba aquí para buscar la resolucion"
+                    noEntriesFoundLabel="Results no found..."
+                    ></ngx-select-search>
+                </option>
+              <option  *ngFor="let resolucion of resoluciones" [value]="resolucion.rei_codigo">
+                  {{resolucion.rei_nombre}}
+              </option> -->
+              <option value="">Select</option>
+              <option *ngFor="let type of typesList" [value]="type.id">
+                {{type.name}}
+              </option>
+            </select>
+            <div class="text-danger" *ngIf="productForm.controls['type'].invalid && (productForm.controls['type'].touched || productForm.controls['type'].dirty)">
+              <span *ngIf="productForm.controls['type'].errors?.['type']">This is required</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- price -->
+      <div class = "col-md-4" >
+        <div class = "col-md-12">
+
+          <div class="col-md-12 col-12" appearance="fill">
+            <label for="price" class="form-label">Price*</label>
+            <input class="form-control" type="number" formControlName="price" matInput name="price" id="price">
+            <div class="text-danger" *ngIf="productForm.controls['price'].invalid && (productForm.controls['price'].touched || productForm.controls['price'].dirty)">
+              <span *ngIf="productForm.controls['price'].errors?.['required']">This is required</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- condition -->
+      <div class = "col-md-4" >
+        <div class = "col-md-12">
+
+          <div class="col-md-12 col-12" appearance="fill">
+            <label for="condition" class="form-label">Condition*</label>
+            <input type="text" class="form-control" formControlName="condition" matInput name="condition" id="condition" placeholder="New/Used/Pre-Order">
+            <div class="text-danger" *ngIf="productForm.controls['condition'].invalid && (productForm.controls['condition'].touched || productForm.controls['condition'].dirty)">
+              <span *ngIf="productForm.controls['condition'].errors?.['required']">This is required</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- brand -->
+      <div class = "col-md-4" >
+        <div class = "col-md-12">
+
+          <div class="col-md-12 col-12" appearance="fill">
+            <label for="brand" class="form-label">Brand*</label>
+            <input type="text" class="form-control" formControlName="brand" matInput name="brand" id="brand" placeholder="Sony/Microsoft">
+            <div class="text-danger" *ngIf="productForm.controls['brand'].invalid && (productForm.controls['brand'].touched || productForm.controls['brand'].dirty)">
+              <span *ngIf="productForm.controls['brand'].errors?.['required']">This is required</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- description -->
+      <div class = "col-md-4" >
+        <div class = "col-md-12">
+
+          <div class="col-md-12 col-12" appearance="fill">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" matInput formControlName="description" name="description" id="description" [maxLength]="250"></textarea>
+          </div>
+          
+        </div>
+      </div>
+
+      <div class = "col-md-2 mt-4">
+        <input class="btn btn-success" type="submit" [disabled]="!productForm.valid" value="{{showCancel ? 'Modify Product' : 'Add Product'}}">
+      </div>
+
+      <div class = "col-md-2 mt-4" *ngIf="showCancel">
+        <button type="button" class="btn btn-danger" (click)="cancelEdit()">Cancel
+          <span class="fas fa-ban btn-success"></span>
+        </button>
+      </div> 
+
+    </div>
+  </form>
+  
+  <!-- List Table -->
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table" >
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Price</th>
+        <th scope="col">Condition</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(item of prodList;track item){
+      <tr>
+        <th scope="row">{{item.id}}</th>
+        <th>{{item.name}}</th>
+        <th>{{item.typeName}}</th>
+        <th>{{item.price}}</th>
+        <th>{{item.condition}}</th>
+        <th>{{item.brand}}</th>
+        <th>{{item.description}}</th>
+        <th class="text-center">
+          <button type="button" class="btn {{item.status == true  ? 'btn-success' : 'btn-danger'}} mx-2" (click)="deleteProduct(item)">
+            <span class="{{item.status == true  ? 'fas fa-check' : 'fas fa-times'}}"></span>
+          </button>
+        </th>
+        <th class="text-center">
+          <button type="button" class="btn btn-primary mx-2" (click)="editProduct(item)">Edit</button>
+          <!-- <button type="button" class="btn btn-danger mx-2">Delete</button> -->
+        </th>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <router-outlet />
+</div>
+
